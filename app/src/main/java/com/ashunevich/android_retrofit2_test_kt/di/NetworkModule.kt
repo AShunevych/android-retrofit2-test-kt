@@ -10,7 +10,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
-import androidx.test.espresso.IdlingResource
+
+
+
+
 
 @Module
 class NetworkModule {
@@ -38,7 +41,6 @@ class NetworkModule {
     ): OkHttpClient {
         val clientBuilder = OkHttpClient.Builder()
             .followRedirects(false)
-
         interceptors.forEach {
             clientBuilder.addInterceptor(it)
         }

@@ -3,6 +3,8 @@ package com.ashunevich.android_retrofit2_test_kt
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.IdlingResource
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.ashunevich.android_retrofit2_test_kt.di.*
@@ -16,6 +18,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
+import androidx.test.rule.ActivityTestRule
+import com.jakewharton.espresso.OkHttp3IdlingResource
+import org.junit.After
 
 
 @RunWith(AndroidJUnit4ClassRunner::class)
@@ -27,14 +32,15 @@ open class DependencyTest {
 
     @Inject lateinit var webApi: WebApi
     @Inject lateinit var mockWebServer: DefaultMockServer
+    @Inject lateinit var idlingResource: OkHttp3IdlingResource
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity>
-            = ActivityScenarioRule(MainActivity::class.java)
+    val mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun setup(){
         (DiApp.component as AndroidTestAppComponent).inject(this)
+        IdlingRegistry.getInstance().register(idlingResource)
     }
 
     @Test
@@ -91,6 +97,12 @@ open class DependencyTest {
         Log.d("RECEIVED_ITEM_TEXT",responseList[0].title.toString())
         Log.d("RECEIVED_ITEM_NUMBER",responseList[0].id.toString())
 
+    }
+
+    @After
+    fun shutdown(){
+        IdlingRegistry.getInstance().unregister(idlingResource)
+        mockWebServer.shutdown()
     }
 }
 
