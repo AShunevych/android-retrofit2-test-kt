@@ -1,11 +1,7 @@
 package com.ashunevich.android_retrofit2_test_kt
 
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.IdlingResource
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.ashunevich.android_retrofit2_test_kt.di.*
 import io.fabric8.mockwebserver.DefaultMockServer
@@ -17,7 +13,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
-import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
 import androidx.test.rule.ActivityTestRule
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import org.junit.After
@@ -46,7 +41,7 @@ open class DependencyTest {
     @Test
     fun listResponse(){
         for (i in 0..2) {
-            mockList.add(ItemJSON("somefact"+i, i ))
+            mockList.add(ItemJSON("some fact$i", i ))
         }
 
         mockWebServer.expect().withPath("/posts").
@@ -63,10 +58,7 @@ open class DependencyTest {
                     t.printStackTrace()
                 }
             })
-
-
         Thread.sleep(2000)
-
         Log.d("RESPONSE_ITEM_AT_0",responseList[0].title.toString())
         Log.d("RESPONSE_ITEM_AT_1",responseList[1].title.toString())
 
@@ -92,8 +84,7 @@ open class DependencyTest {
                 t.printStackTrace()
             }
         })
-
-
+        Thread.sleep(2000)
         Log.d("RECEIVED_ITEM_TEXT",responseList[0].title.toString())
         Log.d("RECEIVED_ITEM_NUMBER",responseList[0].id.toString())
 

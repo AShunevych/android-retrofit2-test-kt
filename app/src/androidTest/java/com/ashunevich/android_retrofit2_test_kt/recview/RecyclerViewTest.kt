@@ -12,9 +12,9 @@ import org.junit.runner.RunWith
 class RecyclerViewTest : DependencyTest() {
 
     @Test
-    fun clickAndGetResponce() {
+    fun clickAndGetResponse() {
         for (i in 0..8) {
-            mockList.add(ItemJSON("somefact" + i, i))
+            mockList.add(ItemJSON("some fact$i", i))
         }
 
         mockWebServer.expect().withPath("/posts").andReturn(200, mockList).always()
@@ -25,7 +25,7 @@ class RecyclerViewTest : DependencyTest() {
         }
         recViewTest {
             recViewIsDisplayed()
-            recViewHasSomeText("somefact8")
+            recViewHasSomeText("some fact8")
         }
     }
 }
