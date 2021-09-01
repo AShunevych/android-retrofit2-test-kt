@@ -21,7 +21,6 @@ import org.junit.After
 @RunWith(AndroidJUnit4ClassRunner::class)
 open class DependencyTest {
 
-
     val mockList = mutableListOf<ItemJSON>()
     var responseList = mutableListOf<ItemJSON>()
 
@@ -33,7 +32,7 @@ open class DependencyTest {
     val mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
-    fun setup(){
+    open fun setup(){
         (DiApp.component as AndroidTestAppComponent).inject(this)
         IdlingRegistry.getInstance().register(idlingResource)
     }
