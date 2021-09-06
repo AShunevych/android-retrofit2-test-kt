@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         DiApp.component.inject(this)
 
         setupRecyclerView()
-        binding!!.getButton.setOnClickListener { injectRetrofit() }
+        binding!!.getButton.setOnClickListener { getPosts() }
     }
 
     fun setupRecyclerView(){
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding?.recView?.adapter = adapterJson
     }
 
-    private fun injectRetrofit(){
+    private fun getPosts(){
         val call: Call<MutableList<ItemJSON>> = webApi.getPosts()
         call.enqueue(object :Callback<MutableList<ItemJSON>>{
             override fun onResponse(
