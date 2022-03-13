@@ -1,37 +1,31 @@
 package com.ashunevich.android_retrofit2_test_kt.recview
 
 
-
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.rule.ActivityTestRule
-import com.ashunevich.android_retrofit2_test_kt.MainActivity
-import com.ashunevich.android_retrofit2_test_kt.R
-import com.ashunevich.android_retrofit2_test_kt.di.DiApp
-import org.junit.Before
-import org.junit.Rule
+import com.ashunevich.android_retrofit2_test_kt.DependencyTest
+import com.ashunevich.android_retrofit2_test_kt.ItemJSON
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class RecyclerViewTest{
-
-    @get:Rule
-    val mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+class RecyclerViewTest : DependencyTest() {
 
     @Test
-    fun clickAndGetRealResponse(){
-        mainScreenRobot{
+    fun clickAndGetResponse() {
+        for (i in 0..8) {
+            mockList.add(ItemJSON("some fact$i", i))
+        }
+
+        mockWebServer.expect().withPath("/posts").andReturn(200, mockList).always()
+
+        mainScreenRobot {
             tapIsDisplayed()
             tapGetButton()
         }
-        Thread.sleep(2000)
-        recViewTest{
+        recViewTest {
             recViewIsDisplayed()
-            recViewHasSomeText("hello8")
+            recViewHasSomeText("some fact8")
         }
     }
-
 }

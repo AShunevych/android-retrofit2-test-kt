@@ -6,10 +6,7 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
-import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import org.hamcrest.Matcher
 
@@ -22,7 +19,7 @@ open class BasicRobot {
 
     fun viewIsDisplayed(matcher: Matcher<View>): ViewInteraction? = Espresso.onView(matcher).check(
         ViewAssertions.matches(
-            ViewMatchers.isDisplayed()
+            isDisplayed()
         )
     )
 

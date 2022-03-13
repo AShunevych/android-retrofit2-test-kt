@@ -11,9 +11,8 @@ fun recViewTest(func: RecViewTest.() -> Unit) = RecViewTest().apply { func() }
 class RecViewTest : BasicRobot() {
     private val recyclerView: Matcher<View> = withId(R.id.recView)
 
-   fun recViewIsDisplayed() = viewIsDisplayed(recyclerView)
+    fun recViewIsDisplayed() = viewIsDisplayed(recyclerView)
 
     fun recViewHasSomeText(string: String) = recViewHasText(string,recyclerView)
 
-    fun sleepIdle() = sleep()
 }
